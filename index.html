@@ -1,0 +1,1999 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio - Lucas Bonin</title>
+  <meta name="description" content="Portfolio développeur web de Lucas Bonin avec projets, CV et lettre de motivation" />
+  <style>
+    :root {
+      --bg: #081120;
+      --bg-soft: #0f1b31;
+      --card: rgba(255, 255, 255, 0.06);
+      --card-2: rgba(255, 255, 255, 0.04);
+      --line: rgba(255, 255, 255, 0.1);
+      --text: #f4f7ff;
+      --muted: #9fafcf;
+      --accent: #6ea8fe;
+      --accent-2: #8b5cf6;
+      --accent-3: #34d399;
+      --danger: #f87171;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      --radius: 24px;
+      --radius-sm: 18px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(110, 168, 254, 0.16), transparent 25%),
+        radial-gradient(circle at bottom left, rgba(139, 92, 246, 0.14), transparent 26%),
+        linear-gradient(180deg, #07101d 0%, #0a1325 100%);
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(14px);
+      background: rgba(8, 17, 32, 0.8);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 16px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(110, 168, 254, 0.22), rgba(139, 92, 246, 0.22));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: var(--shadow);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      color: var(--muted);
+      transition: 0.2s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.07);
+      border-color: var(--line);
+    }
+
+    .lang-toggle {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      cursor: pointer;
+      transition: 0.2s ease;
+      font-weight: 700;
+      margin-left: 6px;
+    }
+
+    .lang-toggle:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: translateY(-1px);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 13px 18px;
+      border-radius: 16px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: 0.2s ease;
+      font-weight: 700;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: white;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--line);
+      color: var(--text);
+    }
+
+    .btn-success {
+      background: rgba(52, 211, 153, 0.14);
+      border-color: rgba(52, 211, 153, 0.24);
+      color: #cbfff0;
+    }
+
+    .page {
+      display: none;
+      padding: 42px 0 56px;
+      min-height: calc(100vh - 76px);
+    }
+
+    .page.active {
+      display: block;
+      animation: fadeIn 0.35s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 22px;
+      align-items: stretch;
+      margin-bottom: 22px;
+    }
+
+    .panel,
+    .card,
+    .project-card,
+    .timeline-card,
+    .doc-card,
+    .contact-card,
+    .cv-section,
+    .letter-card,
+    .mini-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .panel,
+    .card,
+    .contact-card,
+    .cv-section,
+    .letter-card,
+    .doc-card {
+      padding: 28px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--line);
+      color: #dbe6ff;
+      font-size: 0.88rem;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 4.8rem);
+      line-height: 0.96;
+      letter-spacing: -0.05em;
+      margin-bottom: 14px;
+    }
+
+    h2 {
+      font-size: clamp(1.7rem, 3vw, 2.6rem);
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #ffffff 0%, #c2d2ff 45%, #9b7eff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .lead,
+    .text,
+    .muted {
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .hero-actions,
+    .inline-actions,
+    .doc-actions,
+    .project-actions,
+    .filters {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hero-actions {
+      margin-top: 24px;
+    }
+
+    .stats-grid,
+    .home-grid,
+    .skills-grid,
+    .projects-grid,
+    .docs-grid,
+    .contact-grid,
+    .method-grid,
+    .cv-grid,
+    .letter-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-top: 18px;
+    }
+
+    .mini-card {
+      padding: 18px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.045);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .mini-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+
+    .mini-card strong {
+      font-size: 1.08rem;
+      line-height: 1.5;
+    }
+
+    .profile-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .avatar {
+      width: 78px;
+      height: 78px;
+      display: grid;
+      place-items: center;
+      border-radius: 24px;
+      margin-bottom: 18px;
+      font-size: 1.7rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, rgba(110, 168, 254, 0.24), rgba(139, 92, 246, 0.24));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .section-head p {
+      max-width: 780px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .home-grid {
+      grid-template-columns: 1fr 1fr;
+      margin-top: 8px;
+    }
+
+    .skills-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .skill-card {
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.045);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .skill-card span {
+      display: inline-block;
+      margin-bottom: 10px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .project-toolbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .filter-btn {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .search-input {
+      min-width: 240px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      outline: none;
+    }
+
+    .search-input::placeholder {
+      color: #7f8db0;
+    }
+
+    .projects-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .project-card {
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.04));
+    }
+
+    .project-card::before {
+      content: "";
+      position: absolute;
+      right: -35px;
+      bottom: -35px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(110, 168, 254, 0.15), transparent 66%);
+      pointer-events: none;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #dae3ff;
+      margin-bottom: 12px;
+    }
+
+    .stack,
+    .keyword-list,
+    .cv-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 14px 0;
+    }
+
+    .tag {
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.82rem;
+      color: #e8edff;
+    }
+
+    .project-card ul,
+    .cv-list,
+    .letter-list {
+      margin-left: 18px;
+      color: #dce4ff;
+      line-height: 1.8;
+    }
+
+    .project-actions {
+      margin-top: 18px;
+    }
+
+    .docs-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .doc-card {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .doc-preview {
+      padding: 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.035);
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .method-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .timeline-card {
+      padding: 22px;
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .step {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      margin-bottom: 14px;
+      font-weight: 800;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .cv-layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 18px;
+    }
+
+    .cv-sidebar,
+    .cv-main {
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .cv-section {
+      border-radius: var(--radius);
+    }
+
+    .cv-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .cv-meta {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .meta-item {
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .meta-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.84rem;
+      margin-bottom: 4px;
+    }
+
+    .experience-item,
+    .education-item {
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .experience-item + .experience-item,
+    .education-item + .education-item {
+      margin-top: 14px;
+    }
+
+    .date {
+      display: inline-block;
+      margin-bottom: 8px;
+      color: #bdd0ff;
+      font-size: 0.9rem;
+    }
+
+    .letter-grid {
+      grid-template-columns: 1.15fr 0.85fr;
+    }
+
+    .letter-card p {
+      color: #d9e4ff;
+      line-height: 1.9;
+      margin-bottom: 16px;
+    }
+
+    .contact-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .contact-item {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .contact-item span {
+      display: block;
+      font-size: 0.84rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .footer {
+      padding: 0 0 40px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .empty-state {
+      padding: 22px;
+      border-radius: 20px;
+      border: 1px dashed rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--muted);
+      display: none;
+    }
+
+    .print-note {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 1080px) {
+      .hero,
+      .cv-layout,
+      .letter-grid,
+      .projects-grid,
+      .docs-grid,
+      .contact-grid,
+      .home-grid,
+      .skills-grid,
+      .method-grid,
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .topbar-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero,
+      .cv-layout,
+      .letter-grid,
+      .projects-grid,
+      .docs-grid,
+      .contact-grid,
+      .home-grid,
+      .skills-grid,
+      .method-grid,
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .panel,
+      .card,
+      .contact-card,
+      .cv-section,
+      .letter-card,
+      .doc-card {
+        padding: 22px;
+      }
+
+      .section-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .search-input {
+        width: 100%;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+        color: black;
+      }
+
+      .topbar,
+      .hero-actions,
+      .filters,
+      .project-toolbar,
+      .footer,
+      .print-note,
+      .doc-actions,
+      .inline-actions {
+        display: none !important;
+      }
+
+      .page {
+        display: none !important;
+        padding: 0;
+      }
+
+      .page.print-active {
+        display: block !important;
+      }
+
+      .panel,
+      .card,
+      .project-card,
+      .timeline-card,
+      .doc-card,
+      .contact-card,
+      .cv-section,
+      .letter-card,
+      .mini-card,
+      .experience-item,
+      .education-item,
+      .meta-item {
+        box-shadow: none;
+        background: white;
+        color: black;
+        border: 1px solid #ddd;
+      }
+
+      .lead,
+      .text,
+      .muted,
+      .section-head p,
+      .project-card p,
+      .letter-card p,
+      .contact-item span,
+      .mini-card span,
+      .meta-item span {
+        color: #444 !important;
+      }
+
+      .tag,
+      .badge {
+        border: 1px solid #ccc;
+        color: #222;
+        background: #f5f5f5;
+      }
+    }
+  </style>
+
+  <style id="light-theme-overrides">
+    :root {
+      --bg: #faf8ff;
+      --bg-soft: #f4f0ff;
+      --card: rgba(255, 255, 255, 0.96);
+      --card-2: #fbf9ff;
+      --line: rgba(91, 33, 182, 0.10);
+      --text: #1f2937;
+      --muted: #64748b;
+      --accent: #7c3aed;
+      --accent-2: #8b5cf6;
+      --accent-3: #16a34a;
+      --danger: #dc2626;
+      --shadow: 0 18px 40px rgba(76, 29, 149, 0.08);
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top right, rgba(139, 92, 246, 0.12), transparent 26%),
+        radial-gradient(circle at bottom left, rgba(168, 85, 247, 0.10), transparent 28%),
+        linear-gradient(180deg, #ffffff 0%, #f7f3ff 100%);
+      color: var(--text);
+    }
+
+    .topbar {
+      background: rgba(255, 255, 255, 0.92);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 8px 24px rgba(76, 29, 149, 0.05);
+    }
+
+    .brand,
+    h1,
+    h2,
+    h3,
+    strong,
+    .contact-item strong,
+    .mini-card strong,
+    .project-card ul,
+    .cv-list,
+    .letter-list,
+    .doc-preview,
+    .badge,
+    .tag,
+    .date,
+    .step {
+      color: var(--text);
+    }
+
+    .brand-badge {
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.14), rgba(168, 85, 247, 0.16));
+      border: 1px solid rgba(124, 58, 237, 0.12);
+      color: #5b21b6;
+    }
+
+    .nav-link {
+      color: #5f6b85;
+    }
+
+    .nav-link:hover,
+    .nav-link.active,
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: rgba(139, 92, 246, 0.10);
+      border-color: rgba(139, 92, 246, 0.18);
+      color: #5b21b6;
+    }
+
+    .lang-toggle {
+      background: rgba(255, 255, 255, 0.95);
+      border-color: rgba(139, 92, 246, 0.16);
+      color: #5b21b6;
+    }
+
+    .lang-toggle:hover {
+      background: rgba(139, 92, 246, 0.08);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      color: white;
+    }
+
+    .btn-secondary,
+    .filter-btn,
+    .search-input,
+    .empty-state,
+    .doc-preview,
+    .meta-item,
+    .experience-item,
+    .education-item,
+    .skill-card,
+    .mini-card,
+    .timeline-card,
+    .contact-item {
+      background: rgba(255, 255, 255, 0.90);
+      border-color: rgba(91, 33, 182, 0.10);
+      color: var(--text);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+    }
+
+    .btn-success {
+      background: #ecfdf3;
+      border-color: #bbf7d0;
+      color: #166534;
+    }
+
+    .panel,
+    .card,
+    .project-card,
+    .timeline-card,
+    .doc-card,
+    .contact-card,
+    .cv-section,
+    .letter-card,
+    .mini-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .project-card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 243, 255, 0.98));
+    }
+
+    .project-card::before {
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.14), transparent 68%);
+    }
+
+    .avatar,
+    .eyebrow {
+      border-color: rgba(124, 58, 237, 0.12);
+    }
+
+    .avatar {
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.14), rgba(168, 85, 247, 0.16));
+      color: #5b21b6;
+    }
+
+    .eyebrow,
+    .badge,
+    .tag {
+      background: rgba(139, 92, 246, 0.08);
+      border-color: rgba(139, 92, 246, 0.14);
+      color: #6d28d9;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #1f2937 0%, #7c3aed 58%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .lead,
+    .text,
+    .muted,
+    .section-head p,
+    .project-card p,
+    .letter-card p,
+    .contact-item span,
+    .mini-card span,
+    .meta-item span,
+    .print-note,
+    .empty-state,
+    .search-input::placeholder {
+      color: var(--muted) !important;
+    }
+
+    .step {
+      background: rgba(139, 92, 246, 0.10);
+      color: #6d28d9;
+    }
+
+    .date {
+      color: #7c3aed;
+    }
+
+    .empty-state {
+      border: 1px dashed rgba(139, 92, 246, 0.24);
+    }
+  </style>
+
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="#home" class="brand" data-route="home">
+        <span class="brand-badge">LB</span>
+        <span>Lucas Bonin</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#home" class="nav-link active" data-route="home">Accueil</a>
+        <a href="#projects" class="nav-link" data-route="projects">Projets</a>
+        <a href="#cv" class="nav-link" data-route="cv">Mon CV</a>
+        <a href="#letter" class="nav-link" data-route="letter">Lettre</a>
+        <a href="#contact" class="nav-link" data-route="contact">Contact</a>
+        <button class="lang-toggle" id="langToggle" type="button">EN</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="page-home" class="page active" data-page="home">
+      <div class="container">
+        <div class="hero">
+          <div class="panel">
+            <div class="eyebrow">Portfolio développeur web</div>
+            <h1>Je crée des <span class="gradient-text">projets web concrets</span>.</h1>
+            <p class="lead">
+              Je m'appelle Lucas Bonin. Je développe des interfaces modernes, des outils web utiles et des projets orientés produit. Ce portfolio a été pensé comme un vrai mini-site professionnel avec plusieurs pages : accueil, projets, CV, lettre de motivation et contact.
+            </p>
+            <div class="hero-actions">
+              <a href="#projects" class="btn btn-primary" data-route="projects">Voir mes projets</a>
+              <a href="#cv" class="btn btn-secondary" data-route="cv">Voir mon CV</a>
+              <a href="#letter" class="btn btn-secondary" data-route="letter">Lire ma lettre</a>
+            </div>
+            <div class="stats-grid">
+              <div class="mini-card">
+                <span>Spécialisation</span>
+                <strong>Front-end moderne</strong>
+              </div>
+              <div class="mini-card">
+                <span>Technos</span>
+                <strong>HTML, CSS, JavaScript</strong>
+              </div>
+              <div class="mini-card">
+                <span>Objectif</span>
+                <strong>Développer mes idées</strong>
+              </div>
+              <div class="mini-card">
+                <span>Profil</span>
+                <strong>Autonome, curieux, créatif</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel profile-panel">
+            <div>
+              <div class="avatar">LB</div>
+              <h2>À propos de moi</h2>
+              <p class="text">
+                J'aime transformer une idée en produit clair, visuel et utile. Je travaille sur des dashboards, des outils personel, des comparateurs web et des projets liés à l'automatisation ou à la gestion comme n8N. Mon objectif est de concevoir des expériences web propres, efficaces et faciles à présenter. Qui simplie la vie car dans les étude pour moi c étais difficile de tout rentenir donc je créais des outil pour m aider a apprendre.
+              </p>
+            </div>
+            <div class="cv-tags">
+              <span class="tag">UI propre</span>
+              <span class="tag">Responsive</span>
+              <span class="tag">Logique produit</span>
+              <span class="tag">Déploiement</span>
+              <span class="tag">Amélioration continue</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-head">
+          <div>
+            <h2>Ce que montre ce portfolio</h2>
+          </div>
+          <p>
+            Ce site n est pas comme tout les autre site l objectifs de se site c est de me présenté et que vous puissiez en savoir plus sur moi.
+          </p>
+        </div>
+
+        <div class="home-grid">
+          <div class="card">
+            <div class="badge">Projets</div>
+            <h3>Des réalisations concrètes</h3>
+            <p class="text">
+              Présentation de plusieurs projets codés avec leurs technologies, leurs objectifs et les problèmes résolus. Même si certaine son boosté avec de l ia.
+            </p>
+            <div class="inline-actions" style="margin-top: 18px;">
+              <a href="#projects" class="btn btn-secondary" data-route="projects">Explorer</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="badge">Mon CV</div>
+            <h3>Une page CV intégrée</h3>
+            <p class="text">
+              Une version propre du CV est intégrée directement dans le portfolio, avec compétences, expériences, formation et profil.
+            </p>
+            <div class="inline-actions" style="margin-top: 18px;">
+              <a href="#cv" class="btn btn-secondary" data-route="cv">Ouvrir le CV</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="badge">Lettre</div>
+            <h3>Lettre de motivation lisible</h3>
+            <p class="text">
+              Vous pourez trouver ma lettre de motivation avec m est objectifs et m est compétence.
+            </p>
+            <div class="inline-actions" style="margin-top: 18px;">
+              <a href="#letter" class="btn btn-secondary" data-route="letter">Lire la lettre</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="badge">Entretien</div>
+            <h3>Support prêt à présenter</h3>
+            <p class="text">
+             Vous pouvez accéder a ma lettre de motivation et mon CV en cliquent sur un des bouton si dessous.
+            </p>
+            <div class="inline-actions" style="margin-top: 18px;">
+              <button class="btn btn-success" data-print="cv">Imprimer le CV</button>
+              <button class="btn btn-success" data-print="letter">Imprimer la lettre</button>
+            </div>
+          </div>
+        </div>
+
+        <section style="padding-top: 26px;">
+          <div class="section-head">
+            <div>
+              <h2>Compétences</h2>
+            </div>
+            <p>Les technologies et domaines que je mobilise le plus dans mes projets.</p>
+          </div>
+          <div class="skills-grid">
+            <div class="skill-card"><span>Front-end</span><strong>HTML / CSS </strong></div>
+            <div class="skill-card"><span>Framework</span><strong>React / Next.js</strong></div>
+            <div class="skill-card"><span>Back-end</span><strong>Node.js / Express</strong></div>
+            <div class="skill-card"><span>Design</span><strong>UI moderne et responsive</strong></div>
+            <div class="skill-card"><span>Produit</span><strong>SaaS / Dashboard / MVP</strong></div>
+            <div class="skill-card"><span>Déploiement</span><strong>Vercel / Debug / Build / local </strong></div>
+            <div class="skill-card"><span>SEO / structure</span><strong>Lisibilité et hiérarchie web et ia</strong></div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="page-projects" class="page" data-page="projects">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Page projets</div>
+            <h2>Mes projets codés</h2>
+          </div>
+          <p>
+            Une sélection de projets qui montrent mon travail sur l'interface, la logique, l'expérience utilisateur, le produit et la résolution de problèmes techniques.
+          </p>
+        </div>
+
+        <div class="project-toolbar">
+          <div class="filters">
+            <button class="filter-btn active" data-filter="all">Tous</button>
+            <button class="filter-btn" data-filter="web">Web</button>
+            <button class="filter-btn" data-filter="tool">Outil</button>
+            <button class="filter-btn" data-filter="beta">Bêta</button>
+          </div>
+          <input type="text" class="search-input" id="projectSearch" placeholder="Rechercher un projet ou une techno..." />
+        </div>
+
+        <div class="empty-state" id="emptyProjects">Aucun projet ne correspond à la recherche actuelle.</div>
+
+        <div class="projects-grid" id="projectsGrid">
+          <article class="project-card" data-category="web" data-search="comparateur tech comparateur-tech comparateur-tech.com vpn hebergement web antivirus ia outils web comparison seo website">
+            <div class="badge">Web</div>
+            <h3>Comparateur Tech</h3>
+            <p class="text">
+              Site de comparaison d'outils numériques et de services web comme les VPN, l'hébergement web, les antivirus et l'IA.
+            </p>
+            <div class="stack">
+              <span class="tag">Comparaison</span>
+              <span class="tag">SEO</span>
+              <span class="tag">Responsive</span>
+              <span class="tag">Web</span>
+            </div>
+            <ul>
+              <li>Comparaison claire de plusieurs catégories d'outils</li>
+              <li>Structure pensée pour trouver rapidement un service</li>
+              <li>Interface simple et lisible</li>
+            </ul>
+            <div class="project-actions">
+              <a href="https://comparateur-tech.com" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Voir le site</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="web" data-search="comparateur formation comparateur-formation vercel formation comparison website orientation learning education">
+            <div class="badge">Web</div>
+            <h3>Comparateur Formation</h3>
+            <p class="text">
+              Plateforme de comparaison de formations conçue pour rendre la recherche et la découverte d'options plus simples.
+            </p>
+            <div class="stack">
+              <span class="tag">Formation</span>
+              <span class="tag">Comparaison</span>
+              <span class="tag">Responsive</span>
+              <span class="tag">Vercel</span>
+            </div>
+            <ul>
+              <li>Présentation claire de différentes formations</li>
+              <li>Navigation pensée pour explorer rapidement</li>
+              <li>Projet web centré sur la lisibilité</li>
+            </ul>
+            <div class="project-actions">
+              <a href="https://comparateur-formation.vercel.app/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Voir le site</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="tool web beta" data-search="whathsapp1 whatsapp beta messaging chat prototype vercel application messages discussion interface">
+            <div class="badge">Outil</div>
+            <h3>Whathsapp1 (bêta)</h3>
+            <p class="text">
+              Prototype d'application de messagerie encore en version bêta, donc pas totalement fonctionnel, créé pour tester une interface et des échanges.
+            </p>
+            <div class="stack">
+              <span class="tag">Bêta</span>
+              <span class="tag">Messagerie</span>
+              <span class="tag">Prototype</span>
+              <span class="tag">Vercel</span>
+            </div>
+            <ul>
+              <li>Version bêta avec certaines fonctions encore à terminer</li>
+              <li>Travail sur l'interface de discussion</li>
+              <li>Projet orienté expérimentation et amélioration</li>
+            </ul>
+            <div class="project-actions">
+              <a href="https://whathsapp1.vercel.app/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Voir la bêta</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="tool web" data-search="comparateur abonnement comparateur-abonnement subscriptions pricing offers compare tool vercel web">
+            <div class="badge">Outil</div>
+            <h3>Comparateur Abonnement</h3>
+            <p class="text">
+              Site permettant de comparer des abonnements pour aider à choisir l'offre la plus adaptée selon les besoins.
+            </p>
+            <div class="stack">
+              <span class="tag">Abonnements</span>
+              <span class="tag">Comparaison</span>
+              <span class="tag">Web</span>
+              <span class="tag">Vercel</span>
+            </div>
+            <ul>
+              <li>Comparaison de plusieurs offres d'abonnements</li>
+              <li>Interface pensée pour simplifier le choix</li>
+              <li>Projet utile et concret</li>
+            </ul>
+            <div class="project-actions">
+              <a href="https://comparateur-abonnement.vercel.app" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Voir le site</a>
+            </div>
+          </article>
+        </div>
+
+        <section style="padding-top: 26px;">
+          <div class="section-head">
+            <div>
+              <h2>Ma façon de travailler</h2>
+            </div>
+            <p>Je cherche toujours à transformer une idée en résultat concret, propre et montrable.</p>
+          </div>
+          <div class="method-grid">
+            <div class="timeline-card">
+              <div class="step">1</div>
+              <h3>Comprendre le besoin</h3>
+              <p class="text">Identifier le vrai problème à résoudre et définir une structure claire.</p>
+            </div>
+            <div class="timeline-card">
+              <div class="step">2</div>
+              <h3>Construire une interface propre</h3>
+              <p class="text">Créer une expérience utilisateur moderne, lisible et responsive.</p>
+            </div>
+            <div class="timeline-card">
+              <div class="step">3</div>
+              <h3>Améliorer et corriger</h3>
+              <p class="text">Optimiser le rendu final, corriger les bugs et rendre le projet solide.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="page-cv" class="page" data-page="cv">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Page CV</div>
+            <h2>Mon CV</h2>
+          </div>
+          <p>
+            Vous pourez trouver une version de mon CV si dessous et mon contact
+          </p>
+        </div>
+
+        <div class="cv-layout">
+          <aside class="cv-sidebar">
+            <div class="cv-section">
+              <div class="avatar" style="margin-bottom: 14px;">LB</div>
+              <h3>Lucas Bonin</h3>
+              <p class="text">Développeur web orienté interfaces modernes, outils utiles et projets concrets.</p>
+              <div class="cv-meta">
+                <div class="meta-item"><span>Email</span><strong>l.bonin2011@gmail.com</strong></div>
+                <div class="meta-item"><span>GitHub</span><strong>github.com/redragon38</strong></div>
+                <div class="meta-item"><span>LinkedIn</span><strong>www.linkedin.com/in/lucas-bonin-0394b8383</strong></div>
+                <div class="meta-item"><span>Localisation</span><strong>France</strong></div>
+              </div>
+            </div>
+
+            <div class="cv-section">
+              <div class="cv-title">
+                <h3>Compétences</h3>
+              </div>
+              <div class="cv-tags">
+                <span class="tag">HTML</span>
+                <span class="tag">CSS</span>
+                <span class="tag">JavaScript</span>
+                <span class="tag">React</span>
+                <span class="tag">Next.js</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">Express</span>                           
+                <span class="tag">Vercel</span>
+                <span class="tag">Responsive Design</span>
+                <span class="tag">SEO</span>
+              </div>
+            </div>
+
+            <div class="cv-section">
+              <h3>Qualités</h3>
+              <ul class="cv-list">
+                <li>Autonomie</li>
+                <li>Capacité d'adaptation</li>
+                <li>Curiosité technique</li>
+                <li>Sens du concret</li>
+                <li>Esprit d'amélioration continue</li>
+                <li> Soit d aider </li>
+              </ul>
+            </div>
+          </aside>
+
+          <div class="cv-main">
+            <div class="cv-section">
+              <div class="cv-title">
+                <h3>Profil</h3>
+                <button class="btn btn-success" data-print="cv">Imprimer le CV</button>
+              </div>
+              <p class="text">
+                Développeur web passionné par la création d'interfaces modernes et de projets utiles. J'aime transformer une idée en produit clair, structuré et présentable. Je travaille sur des outils SaaS, des dashboards, des comparateurs web et des solutions de gestion avec une approche centrée sur l'expérience utilisateur et le résultat concret.
+              </p>
+            </div>
+
+            <div class="cv-section">
+              <h3>Projets mis en avant</h3>
+              <div class="experience-item">
+                <span class="date">Projet web</span>
+                <strong>Comparateur Tech</strong>
+                <p class="text">Site de comparaison d'outils numériques et de services web comme les VPN, l'hébergement web, les antivirus et l'IA.</p>
+              </div>
+              <div class="experience-item">
+                <span class="date">Projet web</span>
+                <strong>Comparateur Formation</strong>
+                <p class="text">Plateforme de comparaison de formations conçue pour rendre la recherche et la découverte d'options plus simples.</p>
+              </div>
+              <div class="experience-item">
+                <span class="date">Projet bêta</span>
+                <strong>Whathsapp1</strong>
+                <p class="text">Prototype d'application de messagerie encore en version bêta, créé pour tester une interface et des échanges.</p>
+              </div>
+              <div class="experience-item">
+                <span class="date">Projet web</span>
+                <strong>Comparateur Abonnement</strong>
+                <p class="text">Site permettant de comparer des abonnements pour aider à choisir l'offre la plus adaptée.</p>
+              </div>
+            </div>
+
+            <div class="cv-section">
+              <h3>Formation</h3>
+              <div class="education-item">
+                <span class="date">Mon parcours</span>
+                <strong>j ai commencé a apprendre le code grace a mon père puis grace au site openclasseroom et enfin des tuto youtube </strong>
+                <p class="text"></p>
+              </div>
+            </div>
+
+            <div class="cv-section">
+              <h3>Objectif professionnel</h3>
+              <p class="text">
+                Intégrer un environnement professionnel où je peux continuer à progresser techniquement, contribuer à des projets web concrets et renforcer mes compétences en développement front-end, produit et expérience utilisateur.Et aider des perssone.
+              </p>
+            </div>
+          </div>
+        </div>
+           </div>
+    </section>
+
+    <section id="page-letter" class="page" data-page="letter">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Page lettre de motivation</div>
+            <h2>Ma lettre de motivation</h2>
+          </div>
+          <p>
+            Une version professionnelle, lisible et directement intégrée au portfolio. Elle peut être adaptée selon l'entreprise visée.
+          </p>
+        </div>
+
+        <div class="letter-grid">
+          <div class="letter-card">
+            <div class="cv-title">
+              <h3>Lettre</h3>
+              <button class="btn btn-success" data-print="letter">Imprimer la lettre</button>
+            </div>
+            <p>Madame, Monsieur,</p>
+            <p>
+              Actuellement élève motivé et déterminé, je souhaite intégrer votre établissement / rejoindre votre équipe afin de poursuivre mon développement personnel et professionnel dans un environnement sérieux et stimulant.
+            </p>
+            <p>
+              Je suis quelqu’un de curieux, avec une forte envie de progresser et de réussir. Même si je sais que je peux parfois manquer de régularité, je travaille activement à m’améliorer, notamment en développant ma discipline et ma capacité à aller au bout de ce que j’entreprends. J’ai une réelle volonté d’apprendre, de comprendre et de m’investir pleinement dans ce que je fais.
+            </p>
+            <p>
+              Je m’intéresse particulièrement au domaine du numérique et du développement, ce qui m’a déjà amené à réaliser plusieurs projets personnels. Ces expériences m’ont permis de développer des compétences en autonomie, en logique et en résolution de problèmes, mais aussi de comprendre l’importance de la persévérance.
+            </p>
+            <p>
+              Sérieux, respectueux et capable de m’adapter, je suis prêt à fournir les efforts nécessaires pour réussir et m’intégrer rapidement. Je suis convaincu que cette opportunité me permettra de progresser et de donner le meilleur de moi-même.
+            </p>
+            <p>
+              Je me tiens à votre disposition pour un entretien afin de vous exposer plus en détail ma motivation.
+            </p>
+            <p>
+              Je vous prie d’agréer, Madame, Monsieur, l’expression de mes salutations distinguées.
+            </p>
+          </div>
+
+          <div class="doc-card">
+            <div class="badge">À personnaliser</div>
+            <h3>Ce que tu peux adapter</h3>
+            <ul class="letter-list">
+              <li>Le nom de l'entreprise</li>
+              <li>Le poste visé</li>
+              <li>Le type de contrat ou de stage</li>
+              <li>Les qualités que tu veux mettre en avant</li>
+              <li>Un projet précis en lien avec l'entreprise</li>
+            </ul>
+            <div class="doc-preview">
+              Astuce : pour chaque candidature, change juste quelques lignes au début et au milieu de la lettre pour la rendre plus crédible et plus ciblée.
+            </div>
+            <div class="doc-actions">
+              <a href="#contact" class="btn btn-secondary" data-route="contact">Me contacter</a>
+              <a href="#projects" class="btn btn-secondary" data-route="projects">Revoir mes projets</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-contact" class="page" data-page="contact">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Page contact</div>
+            <h2>Contact</h2>
+          </div>
+          <p>
+            Cette page te permet de terminer la présentation proprement en entretien et d'afficher tes coordonnées dans un cadre plus professionnel.
+          </p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3>Informations</h3>
+            <p class="text">
+              Je peux présenter mes projets, expliquer mes choix techniques et montrer comment je construis une interface ou un produit web à partir d'un besoin concret.
+            </p>
+            <div class="contact-list">
+              <div class="contact-item"><span>Email</span><strong>l.bonin2011@gmail.com</strong></div>
+              <div class="contact-item"><span>GitHub</span><strong>https://github.com/redragon38</strong></div>
+              <div class="contact-item"><span>LinkedIn</span><strong>www.linkedin.com/in/lucas-bonin-0394b8383</strong></div>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <h3>Documents intégrés</h3>
+            <div class="docs-grid">
+              <div class="doc-card" style="padding: 20px;">
+                <div class="badge">CV</div>
+                <p class="text">Une page dédiée à ton CV est directement intégrée au portfolio.</p>
+                <button class="btn btn-secondary" data-route="cv">Voir le CV</button>
+              </div>
+              <div class="doc-card" style="padding: 20px;">
+                <div class="badge">Lettre</div>
+                <p class="text">Une page dédiée à ta lettre de motivation est également disponible.</p>
+                <button class="btn btn-secondary" data-route="letter">Voir la lettre</button>
+              </div>
+            </div>
+                 </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer container">
+    Portfolio de Lucas Bonin
+  </footer>
+
+  <script>
+
+    const pages = document.querySelectorAll('.page');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const routeButtons = document.querySelectorAll('[data-route]');
+    const printButtons = document.querySelectorAll('[data-print]');
+    const langToggle = document.getElementById('langToggle');
+
+    const translations = {
+      fr: {
+        title: 'Portfolio - Lucas Bonin',
+        metaDescription: 'Portfolio développeur web de Lucas Bonin avec projets, CV et lettre de motivation',
+        htmlLang: 'fr',
+        langButton: 'EN',
+        selectors: {
+          '.nav-link[data-route="home"]': 'Accueil',
+          '.nav-link[data-route="projects"]': 'Projets',
+          '.nav-link[data-route="cv"]': 'Mon CV',
+          '.nav-link[data-route="letter"]': 'Lettre',
+          '.nav-link[data-route="contact"]': 'Contact',
+          '#page-home .eyebrow': 'Portfolio développeur web',
+          '#page-home h1': 'Je crée des <span class="gradient-text">projets web concrets</span>.',
+          '#page-home .lead': "Je m'appelle Lucas Bonin. Je développe des interfaces modernes, des outils web utiles et des projets orientés produit. Ce portfolio a été pensé comme un vrai mini-site professionnel avec plusieurs pages : accueil, projets, CV, lettre de motivation et contact.",
+          '#page-home .hero-actions [data-route="projects"]': 'Voir mes projets',
+          '#page-home .hero-actions [data-route="cv"]': 'Voir mon CV',
+          '#page-home .hero-actions [data-route="letter"]': 'Lire ma lettre',
+          '#page-home .stats-grid .mini-card:nth-child(1) span': 'Spécialisation',
+          '#page-home .stats-grid .mini-card:nth-child(1) strong': 'Front-end moderne',
+          '#page-home .stats-grid .mini-card:nth-child(2) span': 'Technos',
+          '#page-home .stats-grid .mini-card:nth-child(2) strong': 'HTML, CSS, JavaScript',
+          '#page-home .stats-grid .mini-card:nth-child(3) span': 'Objectif',
+          '#page-home .stats-grid .mini-card:nth-child(3) strong': 'Développer mes idées',
+          '#page-home .stats-grid .mini-card:nth-child(4) span': 'Profil',
+          '#page-home .stats-grid .mini-card:nth-child(4) strong': 'Autonome, curieux, créatif',
+          '#page-home .profile-panel h2': 'À propos de moi',
+          '#page-home .profile-panel .text': "J'aime transformer une idée en produit clair, visuel et utile. Je travaille sur des dashboards, des outils personel, des comparateurs web et des projets liés à l'automatisation ou à la gestion comme n8N. Mon objectif est de concevoir des expériences web propres, efficaces et faciles à présenter. Qui simplie la vie car dans les étude pour moi c étais difficile de tout rentenir donc je créais des outil pour m aider a apprendre.",
+          '#page-home .cv-tags .tag:nth-child(1)': 'UI propre',
+          '#page-home .cv-tags .tag:nth-child(2)': 'Responsive',
+          '#page-home .cv-tags .tag:nth-child(3)': 'Logique produit',
+          '#page-home .cv-tags .tag:nth-child(4)': 'Déploiement',
+          '#page-home .cv-tags .tag:nth-child(5)': 'Amélioration continue',
+          '#page-home .section-head h2': 'Ce que montre ce portfolio',
+          '#page-home .section-head p': "Ce site n est pas comme tout les autre site l objectifs de se site c est de me présenté et que vous puissiez en savoir plus sur moi.",
+          '#page-home .home-grid .card:nth-child(1) .badge': 'Projets',
+          '#page-home .home-grid .card:nth-child(1) h3': 'Des réalisations concrètes',
+          '#page-home .home-grid .card:nth-child(1) .text': "Présentation de plusieurs projets codés avec leurs technologies, leurs objectifs et les problèmes résolus. Même si certaine son boosté avec de l ia.",
+          '#page-home .home-grid .card:nth-child(1) [data-route="projects"]': 'Explorer',
+          '#page-home .home-grid .card:nth-child(2) .badge': 'Mon CV',
+          '#page-home .home-grid .card:nth-child(2) h3': 'Une page CV intégrée',
+          '#page-home .home-grid .card:nth-child(2) .text': "Une version propre du CV est intégrée directement dans le portfolio, avec compétences, expériences, formation et profil.",
+          '#page-home .home-grid .card:nth-child(2) [data-route="cv"]': 'Ouvrir le CV',
+          '#page-home .home-grid .card:nth-child(3) .badge': 'Lettre',
+          '#page-home .home-grid .card:nth-child(3) h3': 'Lettre de motivation lisible',
+          '#page-home .home-grid .card:nth-child(3) .text': 'Vous pourez trouver ma lettre de motivation avec m est objectifs et m est compétence.',
+          '#page-home .home-grid .card:nth-child(3) [data-route="letter"]': 'Lire la lettre',
+          '#page-home .home-grid .card:nth-child(4) .badge': 'Entretien',
+          '#page-home .home-grid .card:nth-child(4) h3': 'Support prêt à présenter',
+          '#page-home .home-grid .card:nth-child(4) .text': 'Vous pouvez accéder a ma lettre de motivation et mon CV en cliquent sur un des bouton si dessous.',
+          '#page-home [data-print="cv"]': 'Imprimer le CV',
+          '#page-home [data-print="letter"]': 'Imprimer la lettre',
+          '#page-home section .section-head h2': 'Compétences',
+          '#page-home section .section-head p': 'Les technologies et domaines que je mobilise le plus dans mes projets.',
+          '#page-home .skills-grid .skill-card:nth-child(1) span': 'Front-end',
+          '#page-home .skills-grid .skill-card:nth-child(1) strong': 'HTML / CSS',
+          '#page-home .skills-grid .skill-card:nth-child(2) span': 'Framework',
+          '#page-home .skills-grid .skill-card:nth-child(2) strong': 'React / Next.js',
+          '#page-home .skills-grid .skill-card:nth-child(3) span': 'Back-end',
+          '#page-home .skills-grid .skill-card:nth-child(3) strong': 'Node.js / Express',
+          '#page-home .skills-grid .skill-card:nth-child(4) span': 'Design',
+          '#page-home .skills-grid .skill-card:nth-child(4) strong': 'UI moderne et responsive',
+          '#page-home .skills-grid .skill-card:nth-child(5) span': 'Produit',
+          '#page-home .skills-grid .skill-card:nth-child(5) strong': 'SaaS / Dashboard / MVP',
+          '#page-home .skills-grid .skill-card:nth-child(6) span': 'Déploiement',
+          '#page-home .skills-grid .skill-card:nth-child(6) strong': 'Vercel / Debug / Build / local',
+          '#page-home .skills-grid .skill-card:nth-child(7) span': 'SEO / structure',
+          '#page-home .skills-grid .skill-card:nth-child(7) strong': 'Lisibilité et hiérarchie web et ia',
+
+'#page-projects .eyebrow': 'Page projets',
+'#page-projects .section-head h2': 'Mes projets codés',
+'#page-projects .section-head p': "Une sélection de sites et projets personnels qui montrent mon travail sur l'interface, la logique, la lisibilité et l'utilité concrète.",
+'.filter-btn[data-filter="all"]': 'Tous',
+'.filter-btn[data-filter="web"]': 'Web',
+'.filter-btn[data-filter="tool"]': 'Outil',
+'.filter-btn[data-filter="beta"]': 'Bêta',
+'#emptyProjects': 'Aucun projet ne correspond à la recherche actuelle.',
+'#projectsGrid .project-card:nth-child(1) .badge': 'Web',
+'#projectsGrid .project-card:nth-child(1) h3': 'Comparateur Tech',
+'#projectsGrid .project-card:nth-child(1) .text': "Site de comparaison d'outils numériques et de services web comme les VPN, l'hébergement web, les antivirus et l'IA.",
+'#projectsGrid .project-card:nth-child(1) ul li:nth-child(1)': "Comparaison claire de plusieurs catégories d'outils",
+'#projectsGrid .project-card:nth-child(1) ul li:nth-child(2)': 'Structure pensée pour trouver rapidement un service',
+'#projectsGrid .project-card:nth-child(1) ul li:nth-child(3)': 'Interface simple et lisible',
+'#projectsGrid .project-card:nth-child(1) .project-actions a': 'Voir le site',
+'#projectsGrid .project-card:nth-child(2) .badge': 'Web',
+'#projectsGrid .project-card:nth-child(2) h3': 'Comparateur Formation',
+'#projectsGrid .project-card:nth-child(2) .text': "Plateforme de comparaison de formations conçue pour rendre la recherche et la découverte d'options plus simples.",
+'#projectsGrid .project-card:nth-child(2) ul li:nth-child(1)': 'Présentation claire de différentes formations',
+'#projectsGrid .project-card:nth-child(2) ul li:nth-child(2)': 'Navigation pensée pour explorer rapidement',
+'#projectsGrid .project-card:nth-child(2) ul li:nth-child(3)': 'Projet web centré sur la lisibilité',
+'#projectsGrid .project-card:nth-child(2) .project-actions a': 'Voir le site',
+'#projectsGrid .project-card:nth-child(3) .badge': 'Outil',
+'#projectsGrid .project-card:nth-child(3) h3': 'Whathsapp1 (bêta)',
+'#projectsGrid .project-card:nth-child(3) .text': "Prototype d'application de messagerie encore en version bêta, donc pas totalement fonctionnel, créé pour tester une interface et des échanges.",
+'#projectsGrid .project-card:nth-child(3) ul li:nth-child(1)': 'Version bêta avec certaines fonctions encore à terminer',
+'#projectsGrid .project-card:nth-child(3) ul li:nth-child(2)': "Travail sur l'interface de discussion",
+'#projectsGrid .project-card:nth-child(3) ul li:nth-child(3)': 'Projet orienté expérimentation et amélioration',
+'#projectsGrid .project-card:nth-child(3) .project-actions a': 'Voir la bêta',
+'#projectsGrid .project-card:nth-child(4) .badge': 'Outil',
+'#projectsGrid .project-card:nth-child(4) h3': 'Comparateur Abonnement',
+'#projectsGrid .project-card:nth-child(4) .text': "Site permettant de comparer des abonnements pour aider à choisir l'offre la plus adaptée selon les besoins.",
+'#projectsGrid .project-card:nth-child(4) ul li:nth-child(1)': "Comparaison de plusieurs offres d'abonnements",
+'#projectsGrid .project-card:nth-child(4) ul li:nth-child(2)': 'Interface pensée pour simplifier le choix',
+'#projectsGrid .project-card:nth-child(4) ul li:nth-child(3)': 'Projet utile et concret',
+'#projectsGrid .project-card:nth-child(4) .project-actions a': 'Voir le site',
+'#page-projects section .section-head h2': 'Ma façon de travailler',
+          '#page-projects section .section-head p': 'Je cherche toujours à transformer une idée en résultat concret, propre et montrable.',
+          '#page-projects .method-grid .timeline-card:nth-child(1) h3': 'Comprendre le besoin',
+          '#page-projects .method-grid .timeline-card:nth-child(1) .text': 'Identifier le vrai problème à résoudre et définir une structure claire.',
+          '#page-projects .method-grid .timeline-card:nth-child(2) h3': 'Construire une interface propre',
+          '#page-projects .method-grid .timeline-card:nth-child(2) .text': 'Créer une expérience utilisateur moderne, lisible et responsive.',
+          '#page-projects .method-grid .timeline-card:nth-child(3) h3': 'Améliorer et corriger',
+          '#page-projects .method-grid .timeline-card:nth-child(3) .text': 'Optimiser le rendu final, corriger les bugs et rendre le projet solide.',
+
+          '#page-cv .eyebrow': 'Page CV',
+          '#page-cv .section-head h2': 'Mon CV',
+          '#page-cv .section-head p': 'Vous pourez trouver une version de mon CV si dessous et mon contact',
+          '#page-cv .cv-sidebar .text': 'Développeur web orienté interfaces modernes, outils utiles et projets concrets.',
+          '#page-cv .cv-meta .meta-item:nth-child(1) span': 'Email',
+          '#page-cv .cv-meta .meta-item:nth-child(2) span': 'GitHub',
+          '#page-cv .cv-meta .meta-item:nth-child(3) span': 'LinkedIn',
+          '#page-cv .cv-meta .meta-item:nth-child(4) span': 'Localisation',
+          '#page-cv .cv-title h3': 'Compétences',
+          '#page-cv .cv-section:nth-child(3) h3': 'Qualités',
+          '#page-cv .cv-section:nth-child(3) .cv-list li:nth-child(1)': 'Autonomie',
+          '#page-cv .cv-section:nth-child(3) .cv-list li:nth-child(2)': "Capacité d'adaptation",
+          '#page-cv .cv-section:nth-child(3) .cv-list li:nth-child(3)': 'Curiosité technique',
+          '#page-cv .cv-section:nth-child(3) .cv-list li:nth-child(4)': 'Sens du concret',
+          '#page-cv .cv-section:nth-child(3) .cv-list li:nth-child(5)': "Esprit d'amélioration continue",
+          '#page-cv .cv-section:nth-child(3) .cv-list li:nth-child(6)': "Soit d aider",
+          '#page-cv .cv-main .cv-section:nth-child(1) h3': 'Profil',
+          '#page-cv .cv-main .cv-section:nth-child(1) [data-print="cv"]': 'Imprimer le CV',
+          '#page-cv .cv-main .cv-section:nth-child(1) .text': "Développeur web passionné par la création d'interfaces modernes et de projets utiles. J'aime transformer une idée en produit clair, structuré et présentable. Je travaille sur des outils SaaS, des dashboards, des comparateurs web et des solutions de gestion avec une approche centrée sur l'expérience utilisateur et le résultat concret.",
+'#page-cv .cv-main .cv-section:nth-child(2) h3': 'Projets mis en avant',
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(2) .date': 'Projet web',
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(2) strong': 'Comparateur Tech',
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(2) .text': "Site de comparaison d'outils numériques et de services web comme les VPN, l'hébergement web, les antivirus et l'IA.",
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(3) .date': 'Projet web',
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(3) strong': 'Comparateur Formation',
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(3) .text': "Plateforme de comparaison de formations conçue pour rendre la recherche et la découverte d'options plus simples.",
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(4) .date': 'Projet bêta',
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(4) strong': 'Whathsapp1',
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(4) .text': "Prototype d'application de messagerie encore en version bêta, créé pour tester une interface et des échanges.",
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(5) .date': 'Projet web',
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(5) strong': 'Comparateur Abonnement',
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(5) .text': "Site permettant de comparer des abonnements pour aider à choisir l'offre la plus adaptée.",
+'#page-cv .cv-main .cv-section:nth-child(3) h3': 'Formation',
+          '#page-cv .cv-main .cv-section:nth-child(3) .date': 'Mon parcours',
+          '#page-cv .cv-main .cv-section:nth-child(3) strong': 'j ai commencé a apprendre le code grace a mon père puis grace au site openclasseroom et enfin des tuto youtube',
+          '#page-cv .cv-main .cv-section:nth-child(4) h3': 'Objectif professionnel',
+          '#page-cv .cv-main .cv-section:nth-child(4) .text': "Intégrer un environnement professionnel où je peux continuer à progresser techniquement, contribuer à des projets web concrets et renforcer mes compétences en développement front-end, produit et expérience utilisateur.Et aider des perssone.",
+
+          '#page-letter .eyebrow': 'Page lettre de motivation',
+          '#page-letter .section-head h2': 'Ma lettre de motivation',
+          '#page-letter .section-head p': "Une version professionnelle, lisible et directement intégrée au portfolio. Elle peut être adaptée selon l'entreprise visée.",
+          '#page-letter .cv-title h3': 'Lettre',
+          '#page-letter [data-print="letter"]': 'Imprimer la lettre',
+          '#page-letter .letter-card p:nth-child(2)': 'Madame, Monsieur,',
+          '#page-letter .letter-card p:nth-child(3)': 'Actuellement élève motivé et déterminé, je souhaite intégrer votre établissement / rejoindre votre équipe afin de poursuivre mon développement personnel et professionnel dans un environnement sérieux et stimulant.',
+          '#page-letter .letter-card p:nth-child(4)': 'Je suis quelqu’un de curieux, avec une forte envie de progresser et de réussir. Même si je sais que je peux parfois manquer de régularité, je travaille activement à m’améliorer, notamment en développant ma discipline et ma capacité à aller au bout de ce que j’entreprends. J’ai une réelle volonté d’apprendre, de comprendre et de m’investir pleinement dans ce que je fais.',
+          '#page-letter .letter-card p:nth-child(5)': 'Je m’intéresse particulièrement au domaine du numérique et du développement, ce qui m’a déjà amené à réaliser plusieurs projets personnels. Ces expériences m’ont permis de développer des compétences en autonomie, en logique et en résolution de problèmes, mais aussi de comprendre l’importance de la persévérance.',
+          '#page-letter .letter-card p:nth-child(6)': 'Sérieux, respectueux et capable de m’adapter, je suis prêt à fournir les efforts nécessaires pour réussir et m’intégrer rapidement. Je suis convaincu que cette opportunité me permettra de progresser et de donner le meilleur de moi-même.',
+          '#page-letter .letter-card p:nth-child(7)': 'Je me tiens à votre disposition pour un entretien afin de vous exposer plus en détail ma motivation.',
+          '#page-letter .letter-card p:nth-child(8)': 'Je vous prie d’agréer, Madame, Monsieur, l’expression de mes salutations distinguées.',
+          '#page-letter .doc-card .badge': 'À personnaliser',
+          '#page-letter .doc-card h3': 'Ce que tu peux adapter',
+          '#page-letter .doc-card .letter-list li:nth-child(1)': "Le nom de l'entreprise",
+          '#page-letter .doc-card .letter-list li:nth-child(2)': 'Le poste visé',
+          '#page-letter .doc-card .letter-list li:nth-child(3)': 'Le type de contrat ou de stage',
+          '#page-letter .doc-card .letter-list li:nth-child(4)': 'Les qualités que tu veux mettre en avant',
+          '#page-letter .doc-card .letter-list li:nth-child(5)': "Un projet précis en lien avec l'entreprise",
+          '#page-letter .doc-card .doc-preview': 'Astuce : pour chaque candidature, change juste quelques lignes au début et au milieu de la lettre pour la rendre plus crédible et plus ciblée.',
+          '#page-letter .doc-card [data-route="contact"]': 'Me contacter',
+          '#page-letter .doc-card [data-route="projects"]': 'Revoir mes projets',
+
+          '#page-contact .eyebrow': 'Page contact',
+          '#page-contact .section-head h2': 'Contact',
+          '#page-contact .section-head p': "Cette page te permet de terminer la présentation proprement en entretien et d'afficher tes coordonnées dans un cadre plus professionnel.",
+          '#page-contact .contact-card:nth-child(1) h3': 'Informations',
+          '#page-contact .contact-card:nth-child(1) .text': "Je peux présenter mes projets, expliquer mes choix techniques et montrer comment je construis une interface ou un produit web à partir d'un besoin concret.",
+          '#page-contact .contact-card:nth-child(1) .contact-item:nth-child(1) span': 'Email',
+          '#page-contact .contact-card:nth-child(1) .contact-item:nth-child(2) span': 'GitHub',
+          '#page-contact .contact-card:nth-child(1) .contact-item:nth-child(3) span': 'LinkedIn',
+          '#page-contact .contact-card:nth-child(2) h3': 'Documents intégrés',
+          '#page-contact .contact-card:nth-child(2) .docs-grid .doc-card:nth-child(1) .badge': 'CV',
+          '#page-contact .contact-card:nth-child(2) .docs-grid .doc-card:nth-child(1) .text': 'Une page dédiée à ton CV est directement intégrée au portfolio.',
+          '#page-contact .contact-card:nth-child(2) .docs-grid .doc-card:nth-child(1) [data-route="cv"]': 'Voir le CV',
+          '#page-contact .contact-card:nth-child(2) .docs-grid .doc-card:nth-child(2) .badge': 'Lettre',
+          '#page-contact .contact-card:nth-child(2) .docs-grid .doc-card:nth-child(2) .text': 'Une page dédiée à ta lettre de motivation est également disponible.',
+          '#page-contact .contact-card:nth-child(2) .docs-grid .doc-card:nth-child(2) [data-route="letter"]': 'Voir la lettre',
+          '.footer': 'Portfolio de Lucas Bonin'
+        },
+        placeholders: {
+          '#projectSearch': 'Rechercher un projet ou une techno...'
+        }
+      },
+      en: {
+        title: 'Portfolio - Lucas Bonin',
+        metaDescription: 'Web developer portfolio of Lucas Bonin with projects, résumé and cover letter',
+        htmlLang: 'en',
+        langButton: 'FR',
+        selectors: {
+          '.nav-link[data-route="home"]': 'Home',
+          '.nav-link[data-route="projects"]': 'Projects',
+          '.nav-link[data-route="cv"]': 'My Resume',
+          '.nav-link[data-route="letter"]': 'Cover Letter',
+          '.nav-link[data-route="contact"]': 'Contact',
+          '#page-home .eyebrow': 'Web developer portfolio',
+          '#page-home h1': 'I create <span class="gradient-text">real web projects</span>.',
+          '#page-home .lead': "My name is Lucas Bonin. I build modern interfaces, useful web tools, and product-oriented projects. This portfolio was designed as a real professional mini-site with several pages: home, projects, résumé, cover letter, and contact.",
+          '#page-home .hero-actions [data-route="projects"]': 'See my projects',
+          '#page-home .hero-actions [data-route="cv"]': 'See my resume',
+          '#page-home .hero-actions [data-route="letter"]': 'Read my letter',
+          '#page-home .stats-grid .mini-card:nth-child(1) span': 'Specialization',
+          '#page-home .stats-grid .mini-card:nth-child(1) strong': 'Modern front-end',
+          '#page-home .stats-grid .mini-card:nth-child(2) span': 'Tech stack',
+          '#page-home .stats-grid .mini-card:nth-child(2) strong': 'HTML, CSS, JavaScript',
+          '#page-home .stats-grid .mini-card:nth-child(3) span': 'Goal',
+          '#page-home .stats-grid .mini-card:nth-child(3) strong': 'Develop my ideas',
+          '#page-home .stats-grid .mini-card:nth-child(4) span': 'Profile',
+          '#page-home .stats-grid .mini-card:nth-child(4) strong': 'Independent, curious, creative',
+          '#page-home .profile-panel h2': 'About me',
+          '#page-home .profile-panel .text': "I like turning an idea into a clear, visual, and useful product. I work on dashboards, personal tools, web comparison sites, and projects related to automation or management such as n8N. My goal is to design clean, efficient, and easy-to-present web experiences. Tools that make life easier, because in school it was hard for me to remember everything, so I created tools to help myself learn.",
+          '#page-home .cv-tags .tag:nth-child(1)': 'Clean UI',
+          '#page-home .cv-tags .tag:nth-child(2)': 'Responsive',
+          '#page-home .cv-tags .tag:nth-child(3)': 'Product logic',
+          '#page-home .cv-tags .tag:nth-child(4)': 'Deployment',
+          '#page-home .cv-tags .tag:nth-child(5)': 'Continuous improvement',
+          '#page-home .section-head h2': 'What this portfolio shows',
+          '#page-home .section-head p': 'This site is not like every other site. Its goal is to present who I am and let you learn more about me.',
+          '#page-home .home-grid .card:nth-child(1) .badge': 'Projects',
+          '#page-home .home-grid .card:nth-child(1) h3': 'Concrete work',
+          '#page-home .home-grid .card:nth-child(1) .text': 'Presentation of several coded projects with their technologies, goals, and solved problems. Even if some of them were boosted with AI.',
+          '#page-home .home-grid .card:nth-child(1) [data-route="projects"]': 'Explore',
+          '#page-home .home-grid .card:nth-child(2) .badge': 'My Resume',
+          '#page-home .home-grid .card:nth-child(2) h3': 'An integrated resume page',
+          '#page-home .home-grid .card:nth-child(2) .text': 'A clean version of my resume is integrated directly into the portfolio, with skills, experience, education, and profile.',
+          '#page-home .home-grid .card:nth-child(2) [data-route="cv"]': 'Open resume',
+          '#page-home .home-grid .card:nth-child(3) .badge': 'Letter',
+          '#page-home .home-grid .card:nth-child(3) h3': 'Readable cover letter',
+          '#page-home .home-grid .card:nth-child(3) .text': 'You can find my cover letter with my goals and my skills.',
+          '#page-home .home-grid .card:nth-child(3) [data-route="letter"]': 'Read the letter',
+          '#page-home .home-grid .card:nth-child(4) .badge': 'Interview',
+          '#page-home .home-grid .card:nth-child(4) h3': 'Ready-to-show support',
+          '#page-home .home-grid .card:nth-child(4) .text': 'You can access my cover letter and my resume by clicking one of the buttons below.',
+          '#page-home [data-print="cv"]': 'Print resume',
+          '#page-home [data-print="letter"]': 'Print letter',
+          '#page-home section .section-head h2': 'Skills',
+          '#page-home section .section-head p': 'The technologies and areas I use the most in my projects.',
+          '#page-home .skills-grid .skill-card:nth-child(1) span': 'Front-end',
+          '#page-home .skills-grid .skill-card:nth-child(1) strong': 'HTML / CSS',
+          '#page-home .skills-grid .skill-card:nth-child(2) span': 'Framework',
+          '#page-home .skills-grid .skill-card:nth-child(2) strong': 'React / Next.js',
+          '#page-home .skills-grid .skill-card:nth-child(3) span': 'Back-end',
+          '#page-home .skills-grid .skill-card:nth-child(3) strong': 'Node.js / Express',
+          '#page-home .skills-grid .skill-card:nth-child(4) span': 'Design',
+          '#page-home .skills-grid .skill-card:nth-child(4) strong': 'Modern and responsive UI',
+          '#page-home .skills-grid .skill-card:nth-child(5) span': 'Product',
+          '#page-home .skills-grid .skill-card:nth-child(5) strong': 'SaaS / Dashboard / MVP',
+          '#page-home .skills-grid .skill-card:nth-child(6) span': 'Deployment',
+          '#page-home .skills-grid .skill-card:nth-child(6) strong': 'Vercel / Debug / Build / local',
+          '#page-home .skills-grid .skill-card:nth-child(7) span': 'SEO / structure',
+          '#page-home .skills-grid .skill-card:nth-child(7) strong': 'Readability and web / AI hierarchy',
+
+          '#page-projects .eyebrow': 'Projects page',
+'#page-projects .section-head h2': 'My coded projects',
+'#page-projects .section-head p': 'A selection of personal sites and projects that show my work on interface, logic, readability, and practical usefulness.',
+'.filter-btn[data-filter="all"]': 'All',
+'.filter-btn[data-filter="web"]': 'Web',
+'.filter-btn[data-filter="tool"]': 'Tool',
+'.filter-btn[data-filter="beta"]': 'Beta',
+'#emptyProjects': 'No project matches the current search.',
+'#projectsGrid .project-card:nth-child(1) .badge': 'Web',
+'#projectsGrid .project-card:nth-child(1) h3': 'Comparateur Tech',
+'#projectsGrid .project-card:nth-child(1) .text': 'A comparison site for digital tools and web services such as VPNs, web hosting, antivirus software, and AI.',
+'#projectsGrid .project-card:nth-child(1) ul li:nth-child(1)': 'Clear comparison of several tool categories',
+'#projectsGrid .project-card:nth-child(1) ul li:nth-child(2)': 'Structure designed to find a service quickly',
+'#projectsGrid .project-card:nth-child(1) ul li:nth-child(3)': 'Simple and readable interface',
+'#projectsGrid .project-card:nth-child(1) .project-actions a': 'View site',
+'#projectsGrid .project-card:nth-child(2) .badge': 'Web',
+'#projectsGrid .project-card:nth-child(2) h3': 'Comparateur Formation',
+'#projectsGrid .project-card:nth-child(2) .text': 'A training comparison platform designed to make searching and discovering options easier.',
+'#projectsGrid .project-card:nth-child(2) ul li:nth-child(1)': 'Clear presentation of different training options',
+'#projectsGrid .project-card:nth-child(2) ul li:nth-child(2)': 'Navigation designed for quick exploration',
+'#projectsGrid .project-card:nth-child(2) ul li:nth-child(3)': 'Web project focused on readability',
+'#projectsGrid .project-card:nth-child(2) .project-actions a': 'View site',
+'#projectsGrid .project-card:nth-child(3) .badge': 'Tool',
+'#projectsGrid .project-card:nth-child(3) h3': 'Whathsapp1 (beta)',
+'#projectsGrid .project-card:nth-child(3) .text': 'A messaging app prototype still in beta, so not fully functional yet, created to test an interface and conversations.',
+'#projectsGrid .project-card:nth-child(3) ul li:nth-child(1)': 'Beta version with some features still to finish',
+'#projectsGrid .project-card:nth-child(3) ul li:nth-child(2)': 'Work on the chat interface',
+'#projectsGrid .project-card:nth-child(3) ul li:nth-child(3)': 'Project focused on experimentation and improvement',
+'#projectsGrid .project-card:nth-child(3) .project-actions a': 'View beta',
+'#projectsGrid .project-card:nth-child(4) .badge': 'Tool',
+'#projectsGrid .project-card:nth-child(4) h3': 'Comparateur Abonnement',
+'#projectsGrid .project-card:nth-child(4) .text': 'A site that compares subscriptions to help choose the most suitable offer depending on the need.',
+'#projectsGrid .project-card:nth-child(4) ul li:nth-child(1)': 'Comparison of several subscription offers',
+'#projectsGrid .project-card:nth-child(4) ul li:nth-child(2)': 'Interface designed to simplify the choice',
+'#projectsGrid .project-card:nth-child(4) ul li:nth-child(3)': 'Useful and practical project',
+'#projectsGrid .project-card:nth-child(4) .project-actions a': 'View site',
+'#page-projects section .section-head h2': 'How I work',
+          '#page-projects section .section-head p': 'I always try to turn an idea into something concrete, clean, and easy to show.',
+          '#page-projects .method-grid .timeline-card:nth-child(1) h3': 'Understand the need',
+          '#page-projects .method-grid .timeline-card:nth-child(1) .text': 'Identify the real problem to solve and define a clear structure.',
+          '#page-projects .method-grid .timeline-card:nth-child(2) h3': 'Build a clean interface',
+          '#page-projects .method-grid .timeline-card:nth-child(2) .text': 'Create a modern, readable, and responsive user experience.',
+          '#page-projects .method-grid .timeline-card:nth-child(3) h3': 'Improve and fix',
+          '#page-projects .method-grid .timeline-card:nth-child(3) .text': 'Optimize the final result, fix bugs, and make the project solid.',
+
+          '#page-cv .eyebrow': 'Resume page',
+          '#page-cv .section-head h2': 'My Resume',
+          '#page-cv .section-head p': 'You can find a version of my resume below, as well as my contact information.',
+          '#page-cv .cv-sidebar .text': 'Web developer focused on modern interfaces, useful tools, and concrete projects.',
+          '#page-cv .cv-meta .meta-item:nth-child(1) span': 'Email',
+          '#page-cv .cv-meta .meta-item:nth-child(2) span': 'GitHub',
+          '#page-cv .cv-meta .meta-item:nth-child(3) span': 'LinkedIn',
+          '#page-cv .cv-meta .meta-item:nth-child(4) span': 'Location',
+          '#page-cv .cv-title h3': 'Skills',
+          '#page-cv .cv-section:nth-child(3) h3': 'Qualities',
+          '#page-cv .cv-section:nth-child(3) .cv-list li:nth-child(1)': 'Independence',
+          '#page-cv .cv-section:nth-child(3) .cv-list li:nth-child(2)': 'Adaptability',
+          '#page-cv .cv-section:nth-child(3) .cv-list li:nth-child(3)': 'Technical curiosity',
+          '#page-cv .cv-section:nth-child(3) .cv-list li:nth-child(4)': 'Practical mindset',
+          '#page-cv .cv-section:nth-child(3) .cv-list li:nth-child(5)': 'Continuous improvement mindset',
+          '#page-cv .cv-section:nth-child(3) .cv-list li:nth-child(6)': 'Helping others',
+          '#page-cv .cv-main .cv-section:nth-child(1) h3': 'Profile',
+          '#page-cv .cv-main .cv-section:nth-child(1) [data-print="cv"]': 'Print resume',
+          '#page-cv .cv-main .cv-section:nth-child(1) .text': 'Web developer passionate about creating modern interfaces and useful projects. I like turning an idea into a clear, structured, and presentable product. I work on SaaS tools, dashboards, web comparison sites, and management solutions with an approach focused on user experience and concrete outcomes.',
+'#page-cv .cv-main .cv-section:nth-child(2) h3': 'Highlighted projects',
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(2) .date': 'Web project',
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(2) strong': 'Comparateur Tech',
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(2) .text': 'A comparison site for digital tools and web services such as VPNs, web hosting, antivirus software, and AI.',
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(3) .date': 'Web project',
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(3) strong': 'Comparateur Formation',
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(3) .text': 'A training comparison platform designed to make searching and discovering options easier.',
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(4) .date': 'Beta project',
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(4) strong': 'Whathsapp1',
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(4) .text': 'A messaging app prototype still in beta, created to test an interface and conversations.',
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(5) .date': 'Web project',
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(5) strong': 'Comparateur Abonnement',
+'#page-cv .cv-main .cv-section:nth-child(2) .experience-item:nth-child(5) .text': 'A site that compares subscriptions to help choose the most suitable offer.',
+'#page-cv .cv-main .cv-section:nth-child(3) h3': 'Education',
+          '#page-cv .cv-main .cv-section:nth-child(3) .date': 'My journey',
+          '#page-cv .cv-main .cv-section:nth-child(3) strong': 'I started learning to code thanks to my father, then through OpenClassrooms, and finally with YouTube tutorials.',
+          '#page-cv .cv-main .cv-section:nth-child(4) h3': 'Professional goal',
+          '#page-cv .cv-main .cv-section:nth-child(4) .text': 'Join a professional environment where I can continue to improve technically, contribute to concrete web projects, and strengthen my front-end, product, and user-experience skills. And help people.',
+
+          '#page-letter .eyebrow': 'Cover letter page',
+          '#page-letter .section-head h2': 'My Cover Letter',
+          '#page-letter .section-head p': 'A professional, readable version directly integrated into the portfolio. It can be adapted depending on the company targeted.',
+          '#page-letter .cv-title h3': 'Letter',
+          '#page-letter [data-print="letter"]': 'Print letter',
+          '#page-letter .letter-card p:nth-child(2)': 'Dear Sir or Madam,',
+          '#page-letter .letter-card p:nth-child(3)': 'Currently a motivated and determined student, I wish to join your institution / your team in order to continue my personal and professional development in a serious and stimulating environment.',
+          '#page-letter .letter-card p:nth-child(4)': 'I am a curious person, with a strong desire to improve and succeed. Even though I know I can sometimes lack consistency, I am actively working to improve myself, particularly by developing my discipline and my ability to follow through on what I undertake. I have a real desire to learn, understand, and fully commit to what I do.',
+          '#page-letter .letter-card p:nth-child(5)': 'I am particularly interested in the digital and development field, which has already led me to complete several personal projects. These experiences have allowed me to develop skills in autonomy, logic, and problem solving, while also understanding the importance of perseverance.',
+          '#page-letter .letter-card p:nth-child(6)': 'Serious, respectful, and able to adapt, I am ready to make the necessary efforts to succeed and integrate quickly. I am convinced that this opportunity will allow me to improve and give the best of myself.',
+          '#page-letter .letter-card p:nth-child(7)': 'I remain at your disposal for an interview so that I may explain my motivation in more detail.',
+          '#page-letter .letter-card p:nth-child(8)': 'Yours faithfully,',
+          '#page-letter .doc-card .badge': 'To customize',
+          '#page-letter .doc-card h3': 'What you can adapt',
+          '#page-letter .doc-card .letter-list li:nth-child(1)': 'The company name',
+          '#page-letter .doc-card .letter-list li:nth-child(2)': 'The targeted position',
+          '#page-letter .doc-card .letter-list li:nth-child(3)': 'The contract or internship type',
+          '#page-letter .doc-card .letter-list li:nth-child(4)': 'The qualities you want to highlight',
+          '#page-letter .doc-card .letter-list li:nth-child(5)': 'A specific project linked to the company',
+          '#page-letter .doc-card .doc-preview': 'Tip: for each application, change just a few lines at the beginning and in the middle of the letter to make it more credible and more targeted.',
+          '#page-letter .doc-card [data-route="contact"]': 'Contact me',
+          '#page-letter .doc-card [data-route="projects"]': 'See my projects again',
+
+          '#page-contact .eyebrow': 'Contact page',
+          '#page-contact .section-head h2': 'Contact',
+          '#page-contact .section-head p': 'This page lets you end the presentation properly and display your contact information in a more professional way.',
+          '#page-contact .contact-card:nth-child(1) h3': 'Information',
+          '#page-contact .contact-card:nth-child(1) .text': 'I can present my projects, explain my technical choices, and show how I build an interface or a web product from a concrete need.',
+          '#page-contact .contact-card:nth-child(1) .contact-item:nth-child(1) span': 'Email',
+          '#page-contact .contact-card:nth-child(1) .contact-item:nth-child(2) span': 'GitHub',
+          '#page-contact .contact-card:nth-child(1) .contact-item:nth-child(3) span': 'LinkedIn',
+          '#page-contact .contact-card:nth-child(2) h3': 'Integrated documents',
+          '#page-contact .contact-card:nth-child(2) .docs-grid .doc-card:nth-child(1) .badge': 'Resume',
+          '#page-contact .contact-card:nth-child(2) .docs-grid .doc-card:nth-child(1) .text': 'A dedicated page for your resume is integrated directly into the portfolio.',
+          '#page-contact .contact-card:nth-child(2) .docs-grid .doc-card:nth-child(1) [data-route="cv"]': 'See the resume',
+          '#page-contact .contact-card:nth-child(2) .docs-grid .doc-card:nth-child(2) .badge': 'Letter',
+          '#page-contact .contact-card:nth-child(2) .docs-grid .doc-card:nth-child(2) .text': 'A dedicated page for your cover letter is also available.',
+          '#page-contact .contact-card:nth-child(2) .docs-grid .doc-card:nth-child(2) [data-route="letter"]': 'See the letter',
+          '.footer': 'Portfolio of Lucas Bonin'
+        },
+        placeholders: {
+          '#projectSearch': 'Search for a project or a technology...'
+        }
+      }
+    };
+
+    function applyTranslations(lang) {
+      const pack = translations[lang] || translations.fr;
+      document.documentElement.lang = pack.htmlLang;
+      document.title = pack.title;
+      const metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) {
+        metaDescription.setAttribute('content', pack.metaDescription);
+      }
+      if (langToggle) {
+        langToggle.textContent = pack.langButton;
+      }
+
+      Object.entries(pack.selectors).forEach(([selector, value]) => {
+        const element = document.querySelector(selector);
+        if (!element) return;
+        if (value.includes('<')) {
+          element.innerHTML = value;
+        } else {
+          element.textContent = value;
+        }
+      });
+
+      Object.entries(pack.placeholders || {}).forEach(([selector, value]) => {
+        const element = document.querySelector(selector);
+        if (element) {
+          element.placeholder = value;
+        }
+      });
+
+      localStorage.setItem('portfolioLanguage', lang);
+    }
+
+    function setActivePage(route) {
+      const validRoutes = ['home', 'projects', 'cv', 'letter', 'contact'];
+      const currentRoute = validRoutes.includes(route) ? route : 'home';
+
+      pages.forEach((page) => {
+        page.classList.remove('active', 'print-active');
+        if (page.dataset.page === currentRoute) {
+          page.classList.add('active');
+        }
+      });
+
+      navLinks.forEach((link) => {
+        link.classList.toggle('active', link.dataset.route === currentRoute);
+      });
+
+      if (currentRoute === 'cv') {
+        document.getElementById('page-cv').classList.add('print-active');
+      }
+
+      if (currentRoute === 'letter') {
+        document.getElementById('page-letter').classList.add('print-active');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function getRouteFromHash() {
+      return window.location.hash.replace('#', '') || 'home';
+    }
+
+    window.addEventListener('hashchange', () => {
+      setActivePage(getRouteFromHash());
+    });
+
+    routeButtons.forEach((button) => {
+      button.addEventListener('click', (event) => {
+        const route = button.dataset.route;
+        if (!route) return;
+        event.preventDefault();
+        window.location.hash = route;
+      });
+    });
+
+    printButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const target = button.dataset.print;
+        pages.forEach((page) => page.classList.remove('print-active'));
+        const page = document.getElementById(`page-${target}`);
+        if (page) {
+          page.classList.add('print-active');
+          setActivePage(target);
+          setTimeout(() => window.print(), 120);
+        }
+      });
+    });
+
+    const savedLanguage = localStorage.getItem('portfolioLanguage') || 'fr';
+    applyTranslations(savedLanguage);
+
+    if (langToggle) {
+      langToggle.addEventListener('click', () => {
+        const nextLanguage = document.documentElement.lang === 'fr' ? 'en' : 'fr';
+        applyTranslations(nextLanguage);
+      });
+    }
+
+    setActivePage(getRouteFromHash());
+
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projects = document.querySelectorAll('.project-card');
+    const projectSearch = document.getElementById('projectSearch');
+    const emptyProjects = document.getElementById('emptyProjects');
+    let activeFilter = 'all';
+
+    function updateProjects() {
+      const query = projectSearch.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      projects.forEach((project) => {
+        const categories = project.dataset.category || '';
+        const text = project.dataset.search || '';
+        const matchesFilter = activeFilter === 'all' || categories.includes(activeFilter);
+        const matchesSearch = query === '' || text.includes(query);
+        const visible = matchesFilter && matchesSearch;
+        project.style.display = visible ? 'block' : 'none';
+        if (visible) visibleCount += 1;
+      });
+
+      emptyProjects.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        filterButtons.forEach((btn) => btn.classList.remove('active'));
+        button.classList.add('active');
+        activeFilter = button.dataset.filter;
+        updateProjects();
+      });
+    });
+
+    projectSearch.addEventListener('input', updateProjects);
+    updateProjects();
+
+  </script>
+</body>
+</html>
